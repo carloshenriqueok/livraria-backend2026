@@ -1,12 +1,13 @@
 from django.db import models
 
+
 class Autor(models.Model):
     nome = models.CharField(max_length=200)
     email = models.EmailField(max_length=200, blank=True, null=True)
-    
+
     def __str__(self):
-        return f"{self.nome} - ({self.email})"
-    
+        return f'{self.nome} - ({self.email})'
+
     class Meta:
         verbose_name = 'autor'
         verbose_name_plural = 'autores'
