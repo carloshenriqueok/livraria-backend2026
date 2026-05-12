@@ -51,6 +51,7 @@ class UserAdmin(BaseUserAdmin):
 
     ordering = ['id']
     list_display = ['email', 'name']
+    search_fields = ('email', 'name', 'groups__name')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal Info'), {'fields': ('name',)}),
@@ -75,10 +76,11 @@ class UserAdmin(BaseUserAdmin):
             {
                 'classes': ('wide',),
                 'fields': (
+                    'foto',
                     'email',
+                    'name',
                     'password1',
                     'password2',
-                    'name',
                     'is_active',
                     'is_staff',
                     'is_superuser',
