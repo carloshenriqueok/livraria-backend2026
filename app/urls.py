@@ -17,6 +17,7 @@ from rest_framework_simplejwt.views import (
 from core.views import (
     AutorViewSets,
     CategoriaViewSet,
+    CompraViewSet,
     EditoraViewSet,
     LivroViewSet,
     UserRegistrationView,
@@ -29,6 +30,7 @@ router = DefaultRouter()
 
 router.register(r'autores', AutorViewSets, basename='autores')
 router.register(r'categorias', CategoriaViewSet, basename='categorias')
+router.register(r'compras', CompraViewSet, basename='compras')
 router.register(r'editoras', EditoraViewSet, basename='editoras')
 router.register(r'livros', LivroViewSet, basename='livros')
 router.register(r'usuarios', UserViewSet, basename='usuarios')
