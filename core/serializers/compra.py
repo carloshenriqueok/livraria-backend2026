@@ -1,5 +1,5 @@
 from django.db import transaction
-from rest_framework.serializers import CharField, ModelSerializer, SerializerMethodField
+from rest_framework.serializers import CharField, ModelSerializer, SerializerMethodField, CurrentUserDefault, HiddenField
 
 from core.models import Compra, ItensCompra, compra
 
@@ -30,13 +30,29 @@ class ItensComprasSerializer(ModelSerializer):
             'total', 
             )
 
+class ItensCompraListSerializer(ModelSerializer):
+    livro = CharField(source='livro.titulo', read_only=True)
+
+    class Meta:
+        model = ItensCompra
+        fields = ('quantidade', 'livro')
+        depth = 1
 class CompraCreateUpdateSerializer(ModelSerializer):
+    usuario = HiddenField()
     itens = ItensCompraCreateUpdateSerializer(many=True)
     
     class Meta: 
         model = Compra
         fields = ('usuario', 'itens')
 
+
+class CompraListSerializer(ModelSerializer):
+    usuario = CharField(source='usuario.email', read_only=True)
+    itens = ItensCompraListSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Compra
+        fields = ('id', 'usuario', 'itens')
 class CompraSerializer(ModelSerializer):
     usuario = CharField(source='usuario.email', read_only=True)
     status = CharField(source='get_status_display', read_only=True)
