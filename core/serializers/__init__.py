@@ -13,6 +13,7 @@ from .livro import (
     LivroAlterarPrecoSerializer,
     LivroListSerializer,
     LivroRetrieveSerializer,
+    LivroMaisVendidoSerializer,
     LivroSerializer,
 )
 from .user import UserRegistrationSerializer, UserSerializer
