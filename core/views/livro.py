@@ -1,6 +1,6 @@
 from django.db.models import Q, Sum
 from django_filters.rest_framework import DjangoFilterBackend
-from drf_spectacular.utils import OpenApiResponse, extend_schema
+from drf_spectacular.utils import OpenApiExample, OpenApiResponse, extend_schema
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
@@ -23,7 +23,7 @@ class LivroViewSet(ModelViewSet):
     serializer_class = LivroSerializer
 
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['categoria_descricao', 'editora_nome']
+    filterset_fields = ['categoria__descricao', 'editora__nome']
     search_fields = ['titulo']
     ordering_fields = ['titulo', 'preco']
     ordering = ['titulo']
@@ -89,16 +89,19 @@ class LivroViewSet(ModelViewSet):
                 response=None,
                 description="Estoque ajustado com sucesso.",
                 examples=[
-                    {
-                        "status": "Quantidade ajustada com sucesso",
-                        "novo_estoque": 30
-                    }
+                    OpenApiExample(
+                        'Estoque ajustado',
+                        value={"status": "Quantidade ajustada com sucesso", "novo_estoque": 30},
+                    )
                 ]
             ),
             400: OpenApiResponse(
                 description="Erro de validação",
                 examples=[
-                    {"quantidade": "A quantidade em estoque não pode ser negativa."}
+                    OpenApiExample(
+                        'Estoque insuficiente',
+                        value={"quantidade": ["A quantidade em estoque não pode ser negativa."]},
+                    )
                 ]
             ),
         },

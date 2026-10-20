@@ -27,10 +27,12 @@ class Compra(models.Model):
         choices=TipoPagamento.choices,
         default=TipoPagamento.CARTAO_CREDITO
     )
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
-    @property
-    def total(self):
-        return sum(item.preco * item.quantidade for item in self.itens.all())
+    def save(self, *args, **kwargs):
+        if self.pk:
+            self.total = sum(item.preco * item.quantidade for item in self.itens.all())
+        super().save(*args, **kwargs)
 
 
 class ItensCompra(models.Model):
