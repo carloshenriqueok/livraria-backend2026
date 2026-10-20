@@ -6,7 +6,7 @@ from .compra import (
     CompraSerializer,
     ItensCompraCreateUpdateSerializer,
     ItensCompraListSerializer, # novo
-    ItensCompraSerializer,
+    ItensComprasSerializer,
 )
 from .editora import EditoraSerializer
 from .livro import LivroListSerializer, LivroRetrieveSerializer, LivroSerializer
